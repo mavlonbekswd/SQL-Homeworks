@@ -1,0 +1,20 @@
+CREATE DATABASE READBOOKSDB;
+GO
+
+USE READBOOKSDB;
+GO
+
+CREATE TABLE dbo.Books
+(
+    books_id  INT IDENTITY(1,1) PRIMARY KEY,
+    [name]    NVARCHAR(100) NOT NULL,
+    author    NVARCHAR(100) NOT NULL,
+    genre     NVARCHAR(50)  NULL,
+    [Status]  NVARCHAR(30)  NULL
+);
+GO
+
+INSERT INTO dbo.Books ([name], author, genre, [Status])
+VALUES (N'Atomic Habits', N'James Clear', N'self-motiv', N'done');
+
+SELECT * FROM dbo.Books;
