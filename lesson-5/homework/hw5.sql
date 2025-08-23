@@ -70,4 +70,51 @@ WHERE Department = 'HR'
 
 -- ========== HARD TASKS ==========
 
+--task13
+SELECT
+    SaleID,            -- agar bor bo‘lsa
+    CustomerID,        -- agar bor bo‘lsa
+    SaleAmount,
+    CASE
+        WHEN SaleAmount > 500 THEN 'Top Tier'
+        WHEN SaleAmount BETWEEN 200 AND 500 THEN 'Mid Tier'
+        ELSE 'Low Tier'
+    END AS AmountTier
+FROM Sales;
+
+--task14
+/* =========================
+   Orders bor, lekin Sales’da yo‘q bo‘lgan mijoz ID’lari
+   ========================= */
+SELECT DISTINCT CustomerID
+FROM Orders
+EXCEPT
+SELECT DISTINCT CustomerID
+FROM Sales;
+
+/* =========================
+   HARD 3)
+   Orders: Quantity bo‘yicha chegirma foizi
+   1 dona => 3%
+   2–3 dona => 5%
+   Aks holda => 7%
+   ========================= */
+SELECT
+    CustomerID,
+    Quantity,
+    CASE
+        WHEN Quantity = 1 THEN 0.03   -- 3%
+        WHEN Quantity BETWEEN 2 AND 3 THEN 0.05  -- 5%
+        ELSE 0.07                     -- 7%
+    END AS DiscountPercent
+FROM Orders;
+
+-- Agar natijani matn (foiz belgisi bilan) ko‘rsatmoqchi bo‘lsangiz:
+-- SELECT CustomerID, Quantity,
+--        CASE
+--            WHEN Quantity = 1 THEN '3%'
+--            WHEN Quantity BETWEEN 2 AND 3 THEN '5%'
+--            ELSE '7%'
+--        END AS DiscountPercentText
+-- FROM Orders;
 
