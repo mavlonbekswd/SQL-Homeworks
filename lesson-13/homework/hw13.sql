@@ -58,4 +58,50 @@ SELECT
 FROM person;
 
 --MEDIUM
+--task1
+SELECT
+  PARSENAME(REPLACE(FullName,' ','.'), 3) AS FirstName,
+  PARSENAME(REPLACE(FullName,' ','.'), 2) AS MiddleName,
+  PARSENAME(REPLACE(FullName,' ','.'), 1) AS LastName
+FROM Students;
 
+--task2
+SELECT o.*
+FROM Orders AS o
+WHERE o.DeliveryState = 'TX'
+  AND EXISTS (
+        SELECT 1
+        FROM Orders AS oc
+        WHERE oc.CustomerID   = o.CustomerID
+          AND oc.DeliveryState = 'CA'
+      );
+--task3
+SELECT
+  KeyCol,
+  STRING_AGG(ValueCol, ',') WITHIN GROUP (ORDER BY ValueCol) AS ConcatenatedValues
+FROM DMLTable
+GROUP BY KeyCol;
+--task4
+SELECT *
+FROM Employees
+WHERE (
+   LEN(LOWER(first_name + last_name))
+ - LEN(REPLACE(LOWER(first_name + last_name), 'a', ''))
+) >= 3;
+--task5
+
+--HARD
+--task1
+SELECT
+  StudentID,
+  Score + COALESCE(LAG(Score) OVER(ORDER BY StudentID), 0) AS NewScore
+FROM Students
+ORDER BY StudentID;
+--task 2
+SELECT BirthDate,
+       STRING_AGG(FullName, ', ') AS Students
+FROM Students
+GROUP BY BirthDate
+HAVING COUNT(*) > 1;
+
+--task 3
